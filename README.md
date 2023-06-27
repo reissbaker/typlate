@@ -84,7 +84,7 @@ Here's FizzBuzz up to <%= args.count %>:
     return els.join("");
   }
 
-  for(let i = 0; i < args.count; i++) %>
+  for(let i = 0; i < args.count; i++) { %>
     <%= fizzbuzz(i) %>
 <% } %>
 ```
