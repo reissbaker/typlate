@@ -5,7 +5,8 @@
   "main": "build/index.js",
   "bin": "build/index.js",
   "scripts": {
-    "test": "rm -rf ./build && tsc && node build/index.js --outdir 'generated' ./examples/ && tsc && vitest"
+    "build": "rm -rf ./build && tsc && chmod +x ./build/index.js && ./build/index.js --outdir generated ./examples && tsc",
+    "test": "vitest"
   },
   "keywords": [
     "templates",
