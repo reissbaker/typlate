@@ -12,9 +12,9 @@ This is a very big company and we have many employees. Wow, pretty amazing.
 Anyway, here they are:
 
 <% for(const user of args.users) { %>
-<%= userPartial({
-  name: user.name,
-  bio: user.bio,
-  employedSince: user.employedSince,
-}) %>
+  <%= userPartial({
+    name: user.name,
+    bio: user.bio,
+    employedSince: user.employedSince,
+  }) %>
 <% } %>
