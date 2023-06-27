@@ -69,7 +69,7 @@ example:
 
 Here are some lines of code:
 
-<% for(const line of lines) { %>
+<% for(const line of args.lines) { %>
   <%= line %>
 <% } %>
 ```
