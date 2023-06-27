@@ -66,7 +66,9 @@ export async function compileDir(dirpath: string, opts: CompileOpts) {
 const genInfer = "type TyplateArgs<Fn> = Fn extends (a: infer A) => string ? A : never;\n";
 
 export function toTypescript(contents: string) {
+  // what the fuck
   const runRegex = /(?:\n *)?<%((?:[^%]|%(?!>))+)%>/g;
+
   let start = 0;
   const head: string[] = [];
   const segments: string[] = [];
