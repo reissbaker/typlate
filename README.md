@@ -1,5 +1,16 @@
 A simple templating language that generates typesafe TypeScript.
 
+## Why use this instead of template strings?
+
+Indentation and syntax highlighting can be annoying for long template strings
+that are mostly text.
+
+This was originally built for managing long documents to send to LLMs; the
+documents are mostly Markdown text with a few interpolated variables.
+Conserving tokens is important (i.e. you don't want long strings of extra space
+charactes, since they'll count against your token limit), so template strings
+are gonna have pretty weird indentation if you use them.
+
 ## Getting started
 
 ```bash
