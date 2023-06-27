@@ -1,8 +1,8 @@
 <%--
-  import user from "./user-partial.md";
+  import userPartial from "./user-partial.md";
 
   type Args = {
-    users: Array<typlate.Args<typeof user>>,
+    users: Array<TyplateArgs<typeof userPartial>>,
   };
 %>
 
@@ -12,8 +12,9 @@ This is a very big company and we have many employees. Wow, pretty amazing.
 Anyway, here they are:
 
 <% for(const user of args.users) { %>
-  <%= user({
-    name: user.name,
-    bio: user.bio,
-  }) %>
+<%= userPartial({
+  name: user.name,
+  bio: user.bio,
+  employedSince: user.employedSince,
+}) %>
 <% } %>
