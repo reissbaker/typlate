@@ -7,16 +7,15 @@ type TyplateArgs<Fn> = Fn extends (a: infer A) => string ? A : never;
   };
 
 export default function render(args: Args) {
-  const __typlate_segments: string[] = [];
-  const print = (str: string) => __typlate_segments.push(str);
+  const __typelate_print_segments: string[] = [];
 
-  print("");
-print("\n## ");
-print( args.name );
-print("\n\n_");
-print( args.employedSince );
-print("_\n");
-print("\n");
-print( args.bio );
-  return __typlate_segments.join("");
+  __typelate_print_segments.push("");
+__typelate_print_segments.push("\n## ");
+__typelate_print_segments.push( args.name );
+__typelate_print_segments.push("\n\n_");
+__typelate_print_segments.push( args.employedSince );
+__typelate_print_segments.push("_\n");
+__typelate_print_segments.push("\n");
+__typelate_print_segments.push( args.bio );
+  return __typelate_print_segments.join("");
 }

@@ -7,18 +7,17 @@ type TyplateArgs<Fn> = Fn extends (a: infer A) => string ? A : never;
   };
 
 export default function render(args: Args) {
-  const __typlate_segments: string[] = [];
-  const print = (str: string) => __typlate_segments.push(str);
+  const __typelate_print_segments: string[] = [];
 
-  print("");
-print("\n# Employee directory\n\nThis is a very big company and we have many employees. Wow, pretty amazing.\nAnyway, here they are:\n");
+  __typelate_print_segments.push("");
+__typelate_print_segments.push("\n# Employee directory\n\nThis is a very big company and we have many employees. Wow, pretty amazing.\nAnyway, here they are:\n");
  for(const user of args.users) { 
-print("\n");
-print( userPartial({
+__typelate_print_segments.push("\n");
+__typelate_print_segments.push( userPartial({
     name: user.name,
     bio: user.bio,
     employedSince: user.employedSince,
   }) );
  } 
-  return __typlate_segments.join("");
+  return __typelate_print_segments.join("");
 }

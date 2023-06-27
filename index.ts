@@ -120,20 +120,20 @@ export function toTypescript(contents: string) {
   return genInfer + head.join("\n") + "\n" + wrapFn(segments);
 }
 
-const printFn = `print`;
+
+const printArray = "__typelate_print_segments";
 
 function wrapFn(segments: string[]) {
   return `export default function render(args: Args) {
-  const __typlate_segments: string[] = [];
-  const ${printFn} = (str: string) => __typlate_segments.push(str);
+  const ${printArray}: string[] = [];
 
   ${segments.join("\n")}
-  return __typlate_segments.join("");
+  return ${printArray}.join("");
 }`;
 }
 
 function encodePlainText(text: string) {
-  return `${printFn}(${JSON.stringify(text)});`;
+  return `${printArray}.push(${JSON.stringify(text)});`;
 }
 
 function encodeRun(text: string) {
@@ -141,7 +141,7 @@ function encodeRun(text: string) {
 }
 
 function printExpr(text: string) {
-  return `${printFn}(${text});`;
+  return `${printArray}.push(${text});`;
 }
 
 program.parse();
