@@ -67,15 +67,15 @@ export async function compileDir(dirpath: string, opts: CompileOpts) {
 
 const genInfer = "type TyplateArgs<Fn> = Fn extends (a: infer A) => string ? A : never;\n";
 
-export function toTypescript(contents: string) {
-  // what the fuck
-  const runRegex = /(^[^\S\r\n]*)?<%((?:[^%]|%(?!>))+)%>([^\S\r\n]*\n)?/gm;
+// what the fuck
+const RUN_REGEX = /(^[^\S\r\n]*)?<%((?:[^%]|%(?!>))+)%>([^\S\r\n]*\n)?/gm;
 
+export function toTypescript(contents: string) {
   let start = 0;
   const head: string[] = [];
   const segments: string[] = [];
 
-  for(const match of contents.matchAll(runRegex)) {
+  for(const match of contents.matchAll(RUN_REGEX)) {
     const [fullString, leadingWhitespace, captureGroup, trailingWhitespace] = match;
 
     if(match.index == null) throw "Unknown match index";
