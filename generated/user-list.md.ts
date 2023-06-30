@@ -13,11 +13,11 @@ export default function render(args: Args) {
 __typelate_print_segments.push("\n# Employee directory\n\nThis is a very big company and we have many employees. Wow, pretty amazing.\nAnyway, here they are:\n\n");
  for(const user of args.users) { 
 __typelate_print_segments.push("");
-__typelate_print_segments.push(`${ userPartial({
+__typelate_print_segments.push( userPartial({
   name: user.name,
   bio: user.bio,
   employedSince: user.employedSince,
-}) }`);
+}) );
 __typelate_print_segments.push("\n");
 __typelate_print_segments.push("");
  } 

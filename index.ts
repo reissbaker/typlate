@@ -162,7 +162,7 @@ function encodeRun(text: string) {
 }
 
 function printExpr(text: string) {
-  return `${printArray}.push(\`$\{${text}\}\`);`;
+  return `${printArray}.push(${text});`;
 }
 
 program.parse();

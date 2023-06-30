@@ -8,7 +8,7 @@
   };
 %>
 topLevel:
-  <%= args.key %>: <%= args.value %>
+  <%= args.key %>: <%= `${args.value}` %>
   <% for(const key in args.opts) { %>
   <%= key %>: <%= args.opts[key] %>
   <% } %>
