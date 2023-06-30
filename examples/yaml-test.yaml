@@ -1,0 +1,14 @@
+<%--
+  type Args = {
+    key: string,
+    value: number,
+    opts: {
+      [key: string]: string,
+    },
+  };
+%>
+topLevel:
+  <%= args.key %>: <%= args.value %>
+  <% for(const key in args.opts) { %>
+  <%= key %>: <%= args.opts[key] %>
+  <% } %>

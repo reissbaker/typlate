@@ -6,7 +6,8 @@
   "bin": "build/index.js",
   "scripts": {
     "build": "rm -rf ./build && tsc && chmod +x ./build/index.js && ./build/index.js --outdir generated ./examples && tsc",
-    "test": "vitest"
+    "test": "vitest run",
+    "test-watch": "vitest"
   },
   "keywords": [
     "templates",

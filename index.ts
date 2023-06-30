@@ -69,46 +69,61 @@ const genInfer = "type TyplateArgs<Fn> = Fn extends (a: infer A) => string ? A :
 
 export function toTypescript(contents: string) {
   // what the fuck
-  const runRegex = /(?:\n *)?<%((?:[^%]|%(?!>))+)%>/g;
+  const runRegex = /(^[^\S\r\n]*)?<%((?:[^%]|%(?!>))+)%>([^\S\r\n]*\n)?/gm;
 
   let start = 0;
   const head: string[] = [];
   const segments: string[] = [];
 
   for(const match of contents.matchAll(runRegex)) {
-    const [fullString, captureGroup] = match;
+    const [fullString, leadingWhitespace, captureGroup, trailingWhitespace] = match;
 
     if(match.index == null) throw "Unknown match index";
     const matchedLineStart = fullString[0] === "\n" || match.index === 0;
 
     // Since we match on the newline, and the start index may have progressed past the newline, we
     // need this check. If it progressed past the newline, this is all templating whitespace
-    if(start <= match.index) {
+    const encodePlain = start <= match.index;
+    if(encodePlain) {
       const plainText = contents.substring(start, match.index);
       segments.push(encodePlainText(plainText));
+    }
+
+    const isStartOfLine = leadingWhitespace != null
+                        || match.index === 0
+                        || contents[match.index - 1] === "\n";
+
+    const isEndOfLine = trailingWhitespace != null
+                        || match.index + fullString.length === contents.length;
+    const isEntireLine = isStartOfLine && isEndOfLine;
+
+    function addWhitespaceIfNecessary() {
+      if(!isEntireLine) {
+        if(leadingWhitespace) segments.push(encodePlainText(leadingWhitespace));
+        if(trailingWhitespace) segments.push(encodePlainText(trailingWhitespace));
+      }
+    }
+    // Handle the various template tag types
+    // First, head tags
+    if(captureGroup.startsWith("--")) {
+      addWhitespaceIfNecessary();
+      head.push(encodeRun(captureGroup.substring(2)));
+    }
+    // Print expression tags
+    else if(captureGroup[0] === "=") {
+      if(leadingWhitespace) segments.push(encodePlainText(leadingWhitespace));
+      segments.push(printExpr(captureGroup.substring(1)));
+      if(trailingWhitespace) segments.push(encodePlainText(trailingWhitespace));
+    }
+    // Arbitrary TS tags
+    else {
+      addWhitespaceIfNecessary();
+      segments.push(encodeRun(captureGroup));
     }
 
     // Update the indexes. If the templating is the start of the line, and there's an immediate
     // trailing newline, advance the start index to skip the trailing newline.
     start = match.index + fullString.length;
-    if(matchedLineStart && contents[start] === "\n") {
-      start++;
-    }
-
-    // Handle the various template tag types
-    // First, head tags
-    if(captureGroup.startsWith("--")) {
-      head.push(encodeRun(captureGroup.substring(2)));
-    }
-    // Print expression tags
-    else if(captureGroup[0] === "=") {
-      if(matchedLineStart) segments.push(encodePlainText("\n"));
-      segments.push(printExpr(captureGroup.substring(1)));
-    }
-    // Arbitrary TS tags
-    else {
-      segments.push(encodeRun(captureGroup));
-    }
   }
 
   // Clean up any remaining strings
@@ -116,7 +131,7 @@ export function toTypescript(contents: string) {
     segments.push(encodePlainText(contents.substring(start)));
   }
 
-  // Add the Infer type, concat the head TS, and then wrap everything else in the render function
+  // Add the infer type, concat the head TS, and then wrap everything else in the render function
   return genInfer + head.join("\n") + "\n" + wrapFn(segments);
 }
 
@@ -141,7 +156,7 @@ function encodeRun(text: string) {
 }
 
 function printExpr(text: string) {
-  return `${printArray}.push(${text});`;
+  return `${printArray}.push(\`$\{${text}\}\`);`;
 }
 
 program.parse();

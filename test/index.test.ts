@@ -1,6 +1,7 @@
 import { expect, it, describe } from "vitest";
 import userPartial from "../generated/user-partial.md";
 import userList from "../generated/user-list.md";
+import yamlTest from "../generated/yaml-test.yaml";
 
 describe("compiling", () => {
   it("generates the template", () => {
@@ -8,12 +9,12 @@ describe("compiling", () => {
       name: "Test",
       bio: "A bio",
       employedSince: "2023",
-    })).toEqual(`
-## Test
+    })).toEqual(`## Test
 
 _2023_
 
-A bio`)
+A bio
+`)
   });
 });
 
@@ -31,7 +32,6 @@ describe("compiling with partials", () => {
 This is a very big company and we have many employees. Wow, pretty amazing.
 Anyway, here they are:
 
-
 ## Jake
 
 _2016_
@@ -48,6 +48,25 @@ Super nerd
 
 _2018_
 
-Mega nerd`)
+Mega nerd
+
+`)
+  });
+});
+
+describe("compiling with significant whitespace", () => {
+  it("generates the correct whitespace", () => {
+    expect(yamlTest({
+      key: "count",
+      value: 2,
+      opts: {
+        a: "hello",
+        b: "world",
+      },
+    })).toEqual(`topLevel:
+  count: 2
+  a: hello
+  b: world
+`)
   });
 });

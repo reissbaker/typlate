@@ -5,7 +5,6 @@
     employedSince: string,
   };
 %>
-
 ## <%= args.name %>
 
 _<%= args.employedSince %>_

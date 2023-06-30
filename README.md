@@ -52,7 +52,8 @@ Book for only $<%= args.dollars %>.<%= args.cents %>!
 ```
 
 As you can see, `<%= ... %>` tags print out the values of expressions in the
-template, just like ERB files.
+template, just like ERB files. The template provides an `args` variable that
+contains the arguments specified in the `Args` type.
 
 ### Statements
 
@@ -60,7 +61,7 @@ If you need to do more than just print out variables, you can use `<% ... %>`
 blocks, which accept statements, and don't by themselves print anything. For
 example:
 
-```
+```markdown
 <%--
   type Args = {
     lines: string[]
@@ -74,8 +75,8 @@ Here are some lines of code:
 <% } %>
 ```
 
-You can use these for `if` statements as well: it's just ordinary TypeScript.
-For example:
+You can use these for any kind of statements, not just `for` loops: it's just
+ordinary TypeScript. For example:
 
 ```markdown
 <%--
