@@ -2,9 +2,15 @@
 
 import { Command } from "@commander-js/extra-typings";
 import * as fs from "fs/promises";
+import * as oldFs from "fs";
 import * as path from "path";
 
+const packageContents = oldFs.readFileSync(path.join(__dirname, "../package.json"), {
+    encoding: "utf-8",
+});
+const json = JSON.parse(packageContents);
 const program = new Command()
+  .version(json["version"])
   .argument("<path>")
   .option("--outdir <dir>")
   .action(async (path, opts) => {
