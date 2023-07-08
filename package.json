@@ -3,7 +3,7 @@
   "version": "0.0.7",
   "description": "Typesafe templates for TypeScript",
   "main": "build/index.js",
-  "bin": "cli.js",
+  "bin": "bin.js",
   "scripts": {
     "build": "rm -rf ./build && tsc && chmod +x ./bin.js && ./bin.js --outdir generated ./examples && tsc",
     "test": "vitest run",
