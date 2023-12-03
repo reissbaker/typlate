@@ -1,6 +1,6 @@
 {
   "name": "typlate",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Typesafe templates for TypeScript",
   "main": "build/index.js",
   "bin": "bin.js",
