@@ -2,6 +2,7 @@ import { expect, it, describe } from "vitest";
 import userPartial from "../generated/user-partial.md";
 import userList from "../generated/user-list.md";
 import yamlTest from "../generated/yaml-test.yaml";
+import * as up from "../generated/user-partial.md";
 
 describe("compiling", () => {
   it("generates the template", () => {
@@ -15,6 +16,10 @@ _2023_
 
 A bio
 `)
+  });
+
+  it("generates the filepath", () => {
+    expect(up.filepath).toEqual("examples/user-partial.md");
   });
 });
 

@@ -1,4 +1,5 @@
 type TyplateArgs<Fn> = Fn extends (a: infer A) => string ? A : never;
+export const filepath = "examples/user-list.md";
 
   import userPartial from "./user-partial.md";
 

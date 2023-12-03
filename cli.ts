@@ -41,7 +41,7 @@ type CompileOpts = {
 
 export async function compileFile(filepath: string, opts: CompileOpts) {
   const contents = await fs.readFile(filepath, { encoding: 'utf-8' });
-  const ts = toTypescript(contents);
+  const ts = toTypescript(filepath, contents);
 
   await fs.mkdir(path.dirname(opts.outpath), {
     recursive: true,
@@ -75,9 +75,11 @@ const genInfer = "type TyplateArgs<Fn> = Fn extends (a: infer A) => string ? A :
 // what the fuck
 const RUN_REGEX = /(^[^\S\r\n]*)?<%((?:[^%]|%(?!>))+)%>([^\S\r\n]*\n)?/gm;
 
-export function toTypescript(contents: string) {
+export function toTypescript(path: string, contents: string) {
   let start = 0;
-  const head: string[] = [];
+  const head = [
+    `export const filepath = ${JSON.stringify(path)};`
+  ];
   const segments: string[] = [];
 
   for(const match of contents.matchAll(RUN_REGEX)) {

@@ -1,4 +1,5 @@
 type TyplateArgs<Fn> = Fn extends (a: infer A) => string ? A : never;
+export const filepath = "examples/yaml-test.yaml";
 
   type Args = {
     key: string,
