@@ -114,6 +114,13 @@ render({
 });
 ```
 
+Typlate templates also include their original filepath, exported as a variable.
+So if you want to track the original path of your compiled template, you can do:
+
+```typescript
+import { filepath } from "./path/to/generated/code";
+```
+
 ### Partials
 
 Since templates simply compile to functions, and you can write arbitrary
